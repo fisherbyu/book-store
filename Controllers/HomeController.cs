@@ -6,16 +6,24 @@ namespace BookStoreApp.Controllers;
 
 public class HomeController : Controller
 {
+    // Attributes
+    private BookstoreContext bookStoreContext;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    // Constructor
+    public HomeController(ILogger<HomeController> logger, BookstoreContext context)
     {
+        // Initialize Attributes
         _logger = logger;
+        bookStoreContext = context;
     }
 
     public IActionResult Index()
     {
-        return View();
+        List<Book> data = bookStoreContext.Books
+            .ToList();
+
+        return View(data);
     }
 
     public IActionResult Privacy()
